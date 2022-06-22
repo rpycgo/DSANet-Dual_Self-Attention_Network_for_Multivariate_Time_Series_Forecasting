@@ -9,7 +9,7 @@ class AttentionBlock(Layer):
         super(AttentionBlock, self).__init__()
         self.config = model_config
         self.attention = Attention(use_scale=True)
-        self.dense = Dense(units=ff_dense)
+        self.dense = Dense(units=ff_dense, activation='relu')
         self.dropout = Dropout(rate=model_config.dropout_rate)
 
     def call(self, x):
