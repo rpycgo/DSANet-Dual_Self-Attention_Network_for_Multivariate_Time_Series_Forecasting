@@ -29,6 +29,6 @@ def build_attention(x, config=model_config):
 
     output = input
     for _ in range(config.attention_stacks):
-        output = AttentionBlock(input.shape[1], config)(output)
+        output = AttentionBlock(output.shape[-1], config)(output)
     
     return Model(input, output)
