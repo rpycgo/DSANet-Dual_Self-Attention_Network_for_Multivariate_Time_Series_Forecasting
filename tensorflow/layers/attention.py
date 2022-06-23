@@ -5,12 +5,15 @@ from tensorflow.keras.models import Model
 
 
 class AttentionBlock(Layer):
-    def __init__(self, ff_dense, config=model_config):
+    def __init__(self, config=model_config):
         super(AttentionBlock, self).__init__()
         self.config = model_config
         self.attention = Attention(use_scale=True)
         self.dense = Dense(units=ff_dense, activation='relu')
         self.dropout = Dropout(rate=model_config.dropout_rate)
+
+    def build(self, input_shape):
+        self.dense = Dense(units=input_shape[-1], activation='relu')
 
     def call(self, x):
         attention_output = self.attention([x, x, x])
@@ -29,6 +32,6 @@ def build_attention(x, config=model_config):
 
     output = input
     for _ in range(config.attention_stacks):
-        output = AttentionBlock(output.shape[-1], config)(output)
+        output = AttentionBlock(config)(output)
     
     return Model(input, output)
