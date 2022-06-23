@@ -1,5 +1,6 @@
 from ...config.config import model_config
 
+import tensorflow as tf
 from tensorflow.keras.layers import Input, Layer, MultiHeadAttention, Dropout, Dense, LayerNormalization
 from tensorflow.keras.models import Model
 
@@ -40,5 +41,8 @@ def build_attention(x, config=model_config):
     output = input
     for _ in range(config.attention_stacks):
         output = AttentionBlock(config)(output)
+    
+    output = Dense(units=config.h)(output)
+    output = tf.transpose(output, perm=(0, 2, 1))
     
     return Model(input, output)
