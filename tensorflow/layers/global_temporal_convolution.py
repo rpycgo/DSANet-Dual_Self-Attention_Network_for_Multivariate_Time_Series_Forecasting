@@ -8,9 +8,9 @@ from tensorflow.keras.models import Model
 class GlobalTemporalConvolutionBlock(Layer):
     def __init__(self, config=model_config):
         super(GlobalTemporalConvolutionBlock, self).__init__()
-        self.config = model_config
+        self.config = config
         self.conv = Conv2D(filters=config.n_g, kernel_size=config.time_seq, activation='relu')
-        self.dropout = Dropout(rate=model_config.dropout_rate)
+        self.dropout = Dropout(rate=config.dropout_rate)
 
     def call(self, x):
         x = self.conv(x)

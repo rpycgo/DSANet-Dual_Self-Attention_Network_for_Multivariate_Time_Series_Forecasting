@@ -8,7 +8,7 @@ from tensorflow.keras.models import Model
 class ARBlock(Layer):
     def __init__(self, config=model_config):
         super(ARBlock, self).__init__()
-        self.config = model_config
+        self.config = config
         self.dense = Dense(units=config.h, activation='linear')
 
     def call(self, x):        

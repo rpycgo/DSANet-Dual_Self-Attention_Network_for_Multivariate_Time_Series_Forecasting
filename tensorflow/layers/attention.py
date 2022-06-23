@@ -8,7 +8,7 @@ from tensorflow.keras.models import Model
 class AttentionBlock(Layer):
     def __init__(self, config=model_config):
         super(AttentionBlock, self).__init__()
-        self.config = model_config
+        self.config = config
         self.attention = MultiHeadAttention(
             num_heads=config.n_heads, 
             key_dim=config.n_g//config.n_heads,
@@ -16,7 +16,7 @@ class AttentionBlock(Layer):
             )
         self.layer_normalization = LayerNormalization()
 
-        self.dropout = Dropout(rate=model_config.dropout_rate)
+        self.dropout = Dropout(rate=config.dropout_rate)
 
     def build(self, input_shape):
         self.dense = Dense(units=input_shape[-1], activation='relu')

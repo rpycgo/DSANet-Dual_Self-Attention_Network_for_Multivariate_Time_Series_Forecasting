@@ -8,10 +8,10 @@ from tensorflow.keras.models import Model
 class LocalTemporalConvolutionBlock(Layer):
     def __init__(self, config=model_config):
         super(LocalTemporalConvolutionBlock, self).__init__()
-        self.config = model_config
+        self.config = config
         self.conv = Conv1D(filters=config.n_l, kernel_size=config.l, activation='relu')        
         self.max_pooling = MaxPool1D()
-        self.dropout = Dropout(rate=model_config.dropout_rate)
+        self.dropout = Dropout(rate=config.dropout_rate)
         self.dense = Dense(units=config.D)
 
     def call(self, x):
